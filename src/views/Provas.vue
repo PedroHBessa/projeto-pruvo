@@ -12,7 +12,6 @@
                         <v-card-title class="text-h5 grey lighten-2">
                             Nova Prova
                         </v-card-title>
-
                         <v-form
                             ref="form"
                             v-model="valid"
@@ -25,8 +24,6 @@
                             label="Nome da prova"
                             required
                             ></v-text-field>
-
-                           
                             <div class="d-flex justify-end">
                                 <v-btn
                                 :disabled="!valid"
@@ -37,11 +34,7 @@
                                 Salvar
                                 </v-btn>
                             </div>
-
-                        
                         </v-form>
-
-                        
                     </v-card>
                 </v-dialog>
             </div>
@@ -55,7 +48,6 @@
                         <v-card-title class="text-h5 grey lighten-2">
                             Editar Prova
                         </v-card-title>
-
                         <v-form
                             ref="form"
                             v-model="valid"
@@ -68,8 +60,6 @@
                             label="Nome da Prova"
                             required
                             ></v-text-field>
-
-                           
                             <div class="d-flex justify-end">
                                 <v-btn
                                 :disabled="!valid"
@@ -80,11 +70,7 @@
                                 Salvar
                                 </v-btn>
                             </div>
-
-                        
-                        </v-form>
-
-                        
+                        </v-form>  
                     </v-card>
                 </v-dialog>
             </div>
@@ -93,9 +79,7 @@
             </v-btn>
         </v-subheader>
         <br>
-        <v-row>
-            
-            
+        <v-row>   
             <v-col>
                 <v-card>
                     <v-data-table
@@ -119,7 +103,6 @@
 <script>
 import { db } from '../store/db'
     export default {
-     
         data() {
             return {
                 name: "Provas",
@@ -131,10 +114,8 @@ import { db } from '../store/db'
                 id: '',
                 headers: [
                     {
-                      
                         align: 'start',
                         sortable: true,
-                   
                     },
                     {text: 'Id', value: 'id'},
                     {text: 'Prova', value: 'nome'},
@@ -143,83 +124,80 @@ import { db } from '../store/db'
                 Provas: [],
                 valid: true,
                 nameRules: [
-                    v => !!v || 'Name is required',
+                    v => !!v || 'Insira o nome da prova',
                 ],
-                email: '',
-                assuntoRules: [
-                    v => !!v || 'Assunto is required',
-                ],
-            }
-                        
+            }           
             },
-        
         methods: {
+            //abre e fecha o modal para adicionar prova
             toggleModalAdicionar() {
+                
                 this.nomeProva = ""
                 this.modalAdicionar = !this.modalAdicionar;
             },
+            //abre e fecha o modal para editar prova
             toggleModalEditar(id) {
                 this.modalEditar = !this.modalEditar;
                 this.id = id
                    this.buscarProva(id)
                },
-            
-            async addProva(id){
-                console.log(id)
-                if(id === undefined){
+            //adiciona prova no banco de dados
+            async addProva(){
+                if(!this.nomeProva){
+                    alert("Insira o nome da prova")
+                } else {
                     try{
                     const id = await db.provas.add({
                     nome: this.nomeProva,
                 })
-                
-                
+                //recuperar lista atualizada das provas
                 this.buscarProvas()
+                //limpa o campo
                 this.nomeProva = ""
+                //fecha o modal
                 this.toggleModalAdicionar()
-
-                
                 this.status = id;
                 } catch(error) {
                     console.log(error)
                 }
                 }
-                
-                else{
-                    console.log("tem id" + id)
-                }
-                    
-              
             },
+            //recupera lista atualizada do provas
             async buscarProvas(){
                 const provas = await db.provas.toArray();
                 this.listaProvas = provas
                 console.log(provas)
             },
+            //recupera prova para popular o input
             async buscarProva(id){
                 const prova = await db.provas.get(id)
                 this.nomeProva = prova.nome;
-               
             },
+            //edita a prova
             async editarProva(id){
-                
+                if(!this.nomeProva){
+                    alert("Insira o nome da prova")
+                } else {
                  await db.provas.update(id, {
-                    nome: this.nomeProva,
-                    
-                   
+                    nome: this.nomeProva, 
                 })
+                //recupera lista atualizada de provas
                 this.buscarProvas()
+                //fecha o modal
                 this.toggleModalEditar(null)
+                }
                 
             },
+            //deleta a prova
             async excluirProva(id){
                 await db.provas.delete(id)
                 this.buscarProvas()
             }
         },
+        //chama os métodos necessários para a inicialização do componente
         mounted: function(){
             this.buscarProvas()
         }
-
     }
 </script>
 

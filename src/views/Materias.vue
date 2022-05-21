@@ -12,7 +12,6 @@
                         <v-card-title class="text-h5 grey lighten-2">
                             Nova Matéria
                         </v-card-title>
-
                         <v-form
                             ref="form"
                             v-model="valid"
@@ -25,8 +24,6 @@
                             label="Nome da matéria"
                             required
                             ></v-text-field>
-
-                           
                             <div class="d-flex justify-end">
                                 <v-btn
                                 :disabled="!valid"
@@ -37,11 +34,7 @@
                                 Salvar
                                 </v-btn>
                             </div>
-
-                        
-                        </v-form>
-
-                        
+                        </v-form> 
                     </v-card>
                 </v-dialog>
             </div>
@@ -55,7 +48,6 @@
                         <v-card-title class="text-h5 grey lighten-2">
                             Editar Matéria
                         </v-card-title>
-
                         <v-form
                             ref="form"
                             v-model="valid"
@@ -68,8 +60,6 @@
                             label="Nome da matéria"
                             required
                             ></v-text-field>
-
-                           
                             <div class="d-flex justify-end">
                                 <v-btn
                                 :disabled="!valid"
@@ -80,11 +70,7 @@
                                 Salvar
                                 </v-btn>
                             </div>
-
-                        
-                        </v-form>
-
-                        
+                        </v-form>  
                     </v-card>
                 </v-dialog>
             </div>
@@ -94,8 +80,6 @@
         </v-subheader>
         <br>
         <v-row>
-            
-            
             <v-col>
                 <v-card>
                     <v-data-table
@@ -117,9 +101,9 @@
 </template>
 
 <script>
+//TABELA DE MATÉRIAS
 import { db } from '../store/db'
     export default {
-     
         data() {
             return {
                 name: "Matérias",
@@ -131,10 +115,8 @@ import { db } from '../store/db'
                 id: '',
                 headers: [
                     {
-                      
                         align: 'start',
                         sortable: true,
-                   
                     },
                     {text: 'Id', value: 'id'},
                     {text: 'Matéria', value: 'nome'},
@@ -143,80 +125,76 @@ import { db } from '../store/db'
                 materias: [],
                 valid: true,
                 nameRules: [
-                    v => !!v || 'Name is required',
-                ],
-                email: '',
-                assuntoRules: [
-                    v => !!v || 'Assunto is required',
-                ],
-            }
-                        
-            },
-        
+                    v => !!v || 'Insira o nome da matéria',
+                ],  
+            }           
+        },
         methods: {
+            //abre o modal de adicionar matéria
             toggleModalAdicionar() {
                 this.nomeMateria = ""
                 this.modalAdicionar = !this.modalAdicionar;
             },
+            //abre o modal de editar matéria
             toggleModalEditar(id) {
                 this.modalEditar = !this.modalEditar;
                 this.id = id
                    this.buscarMateria(id)
                },
-            
-            async addMateria(id){
-                console.log(id)
-                if(id === undefined){
-                    try{
+            //adiciona matéria no banco de dados
+            async addMateria(){
+                if(!this.nomeMateria){
+                    alert("Insira o nome da matéria")
+                } else {
+                try{
                     const id = await db.materias.add({
                     nome: this.nomeMateria,
-                })
-                
-                
-                this.buscarMaterias()
-                this.nomeMateria = ""
-                this.toggleModalAdicionar()
-
-                
-                this.status = id;
-                } catch(error) {
-                    console.log(error)
+                    })
+                    //recupera lista atualizada de materias
+                    this.buscarMaterias()
+                    //limpa os campos
+                    this.nomeMateria = ""
+                    //fecha o modal
+                    this.toggleModalAdicionar()
+                    this.status = id;
+                    } catch(error) {
+                        console.log(error)
+                    }
                 }
-                }
-                
-                else{
-                    console.log("tem id" + id)
-                }
-                    
-              
             },
+            //recupera a lista de matérias cadastradas
             async buscarMaterias(){
                 const materias = await db.materias.toArray();
                 this.listaMaterias = materias
                 console.log(materias)
             },
+            //recupera a matéria para popular o input 
             async buscarMateria(id){
                 const materia = await db.materias.get(id)
-                this.nomeMateria = materia.nome;
-               
+                this.nomeMateria = materia.nome; 
             },
+            //faz update da matéria no banco de dados
             async editarMateria(id){
-                
+                 if(!this.nomeMateria){
+                    alert("Insira o nome da matéria")
+                } else {
                  await db.materias.update(id, {
-                    nome: this.nomeMateria,
-                    
-                   
+                    nome: this.nomeMateria, 
                 })
-                console.log(this.nomeMateria)
+                //recupera lista atualizada das matérias
                 this.buscarMaterias()
-                this.toggleModalEditar(null)
-                
+                //fecha o modal
+                this.toggleModalEditar(null) 
+                }
             },
+            //deleta a matéria no banco de dados
             async excluirMateria(id){
                 await db.materias.delete(id)
+                //recupera a lista de matérias atualizada
                 this.buscarMaterias()
             }
         },
+        //chama os métodos necessários na inicialização do componente
         mounted: function(){
             this.buscarMaterias()
         }

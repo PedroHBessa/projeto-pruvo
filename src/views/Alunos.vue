@@ -10,7 +10,6 @@
                     <AdicionarAluno @onToggleModal="toggleModal" @onAddAluno="buscarAlunos"/>
                 </v-dialog>
             </div>
-
             <v-btn  @click="toggleModal()" color="success">
                 Novo
             </v-btn>
@@ -41,27 +40,21 @@
                 materias: [],   
                 modal: false,
                 listaAlunos: [],
-            }
-                
+            }      
         },      
         methods: {
+            //recupera a lista de alunos cadastrados
             async buscarAlunos(){
                 const alunos = await db.alunos.toArray(); 
                 this.listaAlunos = alunos
-                console.log(this.listaAlunos)
             },
             toggleModal() {
-                this.modal = !this.modal;
-                
+                this.modal = !this.modal; 
             }
-            },
-        mounted(){
-              
+        },
+        mounted(){  
             this.buscarAlunos()   
         },
-        
-
-
     }
 </script>
 
