@@ -28,7 +28,6 @@ export default {
         ["mdi-account", "Alunos", "/"],
         ["mdi-book-open-outline", "Matérias", "/materias"],
         ["mdi-clipboard-outline", "Provas", "/provas"],
-        ["mdi-cog", "Configurações", "/configuracoes"],
       ],
     };
   },

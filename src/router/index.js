@@ -19,12 +19,7 @@ const routes = [
     name: 'dashboard',
     component: () => import('./../views/Provas')
   },
-  {
-    path: '/configuracoes',
-    name: 'dashboard',
-    component: () => import('./../views/Configuracoes')
-  },
-]
+ ]
 
 const router = new VueRouter({
   mode: 'history',
