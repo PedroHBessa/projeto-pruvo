@@ -61,21 +61,34 @@
         buscarAlunos(){
             this.$emit('onEditAluno')
         },
-        //abre o modal para edição do aluno e passa o id
-        async editarAluno(id) {
-            this.toggleModal()
-            this.idAluno = id;
-        },
-        //abre e fecha o modal
+         //abre e fecha o modal
         toggleModal() {
             this.modal = !this.modal;   
         },
+        //abre o modal para edição do aluno e passa o id
+        async editarAluno(id) {
+            try{
+            this.toggleModal()
+            this.idAluno = id;
+            }  catch(error){
+                console.log(error)
+            }
+            
+        },
+       
         //deleta o aluno
         async excluirAluno(id){
+            try{
             await db.alunos.delete(id)
             //recupera a lista atualizada de alunos
             this.buscarAlunos()
-        }      
-    }, 
+        }  catch(error){
+            console.log(error)
+        } 
+        },
+           
+        
+       
+    } 
 }
 </script>

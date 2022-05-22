@@ -103,6 +103,7 @@ export default {
         },
         //recupera a lista de matérias cadastradas para popular o input
         async buscarMaterias(){
+            try{
         const materias = await db.materias.toArray();
         //cria um array com a resposta do banco de dados somente com os campos necessários
         const arrMaterias = []
@@ -110,24 +111,36 @@ export default {
             arrMaterias.push(element.nome)
         });
         this.materias = arrMaterias
+            } catch(error) {
+                console.log(error)
+            }
         },
         //recupera a lista de provas cadastradas para popular o input
         async buscarProvas(){
+            try{
         const provas = await db.provas.toArray();
         const arrProvas = []
         provas.forEach(element => {
             arrProvas.push(element.nome)
         });
         this.provas = arrProvas
+            }catch(error){
+                console.log(error)
+            }
         },
         //recupera o aluno para popular o input na edição
         async buscarAluno(id){
+            try{
             const aluno = await db.alunos.get(id)
             this.aluno = aluno;
+            } catch (error){
+                console.log(error)
+            }
         },
         //edita o aluno e faz o update no banco de dados
         async editarAluno(id){
-            if(!this.nomeAluno || !this.emailAluno ){
+            try{
+            if(!this.aluno.nome || !this.aluno.email ){
                     alert("Os campos nome e email são obrigatórios")
                 } else {
             await db.alunos.update(id, {
@@ -139,6 +152,9 @@ export default {
             this.toggleModal()
             this.buscarAlunos()
         }   
+        } catch(error){
+            console.log(error)
+        }
         }
     },
     //chama os métodos necessários na inicialização do componente

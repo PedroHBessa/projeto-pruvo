@@ -45,8 +45,12 @@
         methods: {
             //recupera a lista de alunos cadastrados
             async buscarAlunos(){
+                try{
                 const alunos = await db.alunos.toArray(); 
                 this.listaAlunos = alunos
+                } catch(error){
+                    console.log(error)
+                }
             },
             toggleModal() {
                 this.modal = !this.modal; 

@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-card-title class="text-h5 grey lighten-2">
+        <v-card-title data-test="titulo" class="text-h5 grey lighten-2">
             Novo Aluno
         </v-card-title>
         <v-form
@@ -23,6 +23,7 @@
             ></v-text-field>
             <v-select
             v-model="materiasSelecionadas"
+            no-data-text="Nenhuma matéria cadastrada."
             :items="materias"
             label="Matérias"
             multiple
@@ -32,6 +33,7 @@
             ></v-select>
             <v-select
             v-model="provasSelecionadas"
+            no-data-text="Nenhuma prova cadastrada."
             :items="provas"
             label="Provas"
             multiple
@@ -116,6 +118,7 @@ export default {
         },
         //recupera a lista de matérias cadastradas para popular o input
         async buscarMaterias(){
+            try{
         const materias = await db.materias.toArray();
         //cria um array com a resposta do banco de dados somente com os campos necessários
         const arrMaterias = []
@@ -123,9 +126,13 @@ export default {
             arrMaterias.push(element.nome)
         });
         this.materias = arrMaterias
+            } catch(error){
+                console.log(error)
+            }
         },
         //recupera a lista de provas cadastradas para popular o input
         async buscarProvas(){
+            try{
         const provas = await db.provas.toArray();
         //cria um array com a resposta do banco de dados somente com os campos necessários
         const arrProvas = []
@@ -133,6 +140,9 @@ export default {
             arrProvas.push(element.nome)
         });
         this.provas = arrProvas
+            } catch(error){
+                console.log(error)
+            }
         },   
     },
     mounted(){

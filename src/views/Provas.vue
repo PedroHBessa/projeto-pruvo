@@ -143,6 +143,7 @@ import { db } from '../store/db'
                },
             //adiciona prova no banco de dados
             async addProva(){
+                try{
                 if(!this.nomeProva){
                     alert("Insira o nome da prova")
                 } else {
@@ -160,21 +161,32 @@ import { db } from '../store/db'
                 } catch(error) {
                     console.log(error)
                 }
+                }}catch(error){
+                    console.log(error)
                 }
             },
             //recupera lista atualizada do provas
             async buscarProvas(){
+                try{
                 const provas = await db.provas.toArray();
                 this.listaProvas = provas
                 console.log(provas)
+                }catch(error){
+                    console.log(error)
+                }
             },
             //recupera prova para popular o input
             async buscarProva(id){
+                try{
                 const prova = await db.provas.get(id)
                 this.nomeProva = prova.nome;
+                } catch(error) {
+                    console.log(error)
+                }
             },
             //edita a prova
             async editarProva(id){
+                try{
                 if(!this.nomeProva){
                     alert("Insira o nome da prova")
                 } else {
@@ -186,13 +198,19 @@ import { db } from '../store/db'
                 //fecha o modal
                 this.toggleModalEditar(null)
                 }
+                }catch(error){
+                    console.log(error)
+                }
                 
             },
             //deleta a prova
             async excluirProva(id){
+                try{
                 await db.provas.delete(id)
                 this.buscarProvas()
-            }
+            }catch(error){
+                console.log(error)
+            }}
         },
         //chama os métodos necessários para a inicialização do componente
         mounted: function(){

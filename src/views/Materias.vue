@@ -143,6 +143,7 @@ import { db } from '../store/db'
                },
             //adiciona matéria no banco de dados
             async addMateria(){
+                try{
                 if(!this.nomeMateria){
                     alert("Insira o nome da matéria")
                 } else {
@@ -161,20 +162,31 @@ import { db } from '../store/db'
                         console.log(error)
                     }
                 }
+                }catch (error){
+                    console.log(error)
+                }
             },
             //recupera a lista de matérias cadastradas
             async buscarMaterias(){
+                try{
                 const materias = await db.materias.toArray();
                 this.listaMaterias = materias
-                console.log(materias)
+                }catch(error){
+                    console.log(error)
+                }
             },
             //recupera a matéria para popular o input 
             async buscarMateria(id){
+                try{
                 const materia = await db.materias.get(id)
                 this.nomeMateria = materia.nome; 
+                }catch(error){
+                    console.log(error)
+                }
             },
             //faz update da matéria no banco de dados
             async editarMateria(id){
+                try{
                  if(!this.nomeMateria){
                     alert("Insira o nome da matéria")
                 } else {
@@ -185,14 +197,19 @@ import { db } from '../store/db'
                 this.buscarMaterias()
                 //fecha o modal
                 this.toggleModalEditar(null) 
+                }}catch(error){
+                    console.log(error)
                 }
             },
             //deleta a matéria no banco de dados
             async excluirMateria(id){
+                try{
                 await db.materias.delete(id)
                 //recupera a lista de matérias atualizada
                 this.buscarMaterias()
-            }
+            }catch(error){
+                console.log
+            }}
         },
         //chama os métodos necessários na inicialização do componente
         mounted: function(){
