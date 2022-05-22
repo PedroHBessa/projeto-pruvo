@@ -1,6 +1,6 @@
 # Projeto Pruvo
 
-## Para rodar o projetom abra o terminal e rode os comandos a seguir:
+## Para rodar o projeto abra o terminal e rode os comandos a seguir:
 
 ### Clone o projeto
 ```
@@ -22,7 +22,7 @@ npm install
 npm run serve
 ```
 
-### Para realizar teste unitários
+### Para realizar teste unitário
 ```
 npm run test:unit
 ```
