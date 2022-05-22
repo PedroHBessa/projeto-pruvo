@@ -113,13 +113,10 @@ import { db } from '../store/db'
                 prova: '',
                 id: '',
                 headers: [
-                    {
-                        align: 'start',
-                        sortable: true,
-                    },
-                    {text: 'Id', value: 'id'},
-                    {text: 'Prova', value: 'nome'},
-                    {text: 'Editar/Excluir', value: 'acao'},
+                   
+                    {text: 'Id', value: 'id', align: "start"},
+                    {text: 'Prova', value: 'nome', align: "start"},
+                    {text: 'Editar/Excluir', value: 'acao', align: "end"},
                 ],
                 Provas: [],
                 valid: true,

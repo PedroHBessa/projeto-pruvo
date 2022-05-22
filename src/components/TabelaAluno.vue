@@ -41,16 +41,12 @@
     data() {
         return {
             headers: [
-                {
-                    align: "start",
-                    sortable: true,
-                },
-                { text: "Id", value: "id" },
-                { text: "Nome", value: "nome" },
-                { text: "E-mail", value: "email" },
-                { text: "no. Matérias", value: "materias.length" },
-                { text: "no. Provas", value: "provas.length" },
-                { text: "Editar/Excluir", value: "acao" },
+                { text: "Id", value: "id", align: "start" },
+                { text: "Nome", value: "nome", align: "start" },
+                { text: "E-mail", value: "email", align: "start" },
+                { text: "no. Matérias", value: "materias.length", align: "start" },
+                { text: "no. Provas", value: "provas.length", align: "start" },
+                { text: "Editar/Excluir", value: "acao" , align: "end" },
             ],
             modal: false,
             idAluno: "",

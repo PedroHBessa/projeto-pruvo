@@ -115,12 +115,11 @@ import { db } from '../store/db'
                 id: '',
                 headers: [
                     {
-                        align: 'start',
-                        sortable: true,
+                        text:"Id",
+                        value: "id",
                     },
-                    {text: 'Id', value: 'id'},
-                    {text: 'Matéria', value: 'nome'},
-                    {text: 'Editar/Excluir', value: 'acao'},
+                    {text: 'Matéria', value: 'nome', align: "start"},
+                    {text: 'Editar/Excluir', value: 'acao', align: "end"},
                 ],
                 materias: [],
                 valid: true,
@@ -171,6 +170,7 @@ import { db } from '../store/db'
                 try{
                 const materias = await db.materias.toArray();
                 this.listaMaterias = materias
+                console.log(this.listaMaterias)
                 }catch(error){
                     console.log(error)
                 }
