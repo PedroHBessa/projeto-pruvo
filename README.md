@@ -1,24 +1,29 @@
-# v-admin
+# Projeto Pruvo
 
-## Project setup
+## Para rodar o projetom abra o terminal e rode os comandos a seguir:
+
+### Clone o projeto
+```
+git clone https://github.com/PedroHBessa/projeto-pruvo.git
+```
+
+### Navegue até a pasta do projeto
+```
+cd projeto-pruvo
+```
+
+### Instale as dependências do Node Modules
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Inicie o projeto
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Para realizar teste unitários
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+npm run test:unit
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
